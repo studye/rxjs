@@ -7,7 +7,12 @@
 
   <script type="text/javascript" src="../rxjs/rx.all.js"></script>
   <script type="text/javascript"> 
-
+Rx.Observable 
+.from(['Adrià', 'Jen', 'Sergi']) 
+.subscribe( 
+	function(x) { console.log('Next: ' + x); }, 
+	function(err) { console.log('Error:', err); } 
+	function() { console.log('Completed'); } );
   </script>
 </body>
 </html>
