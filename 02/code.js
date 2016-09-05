@@ -1,12 +1,12 @@
 var quakes = Rx.Observable.create(function(observer) {
     window.eqfeed_callback = function(response) {
-        var quakes = response.features;
-        quakes.forEach(function(quake) {
-            observer.onNext(quake);
-        });
+        observer.onNext(response);
+        observer.onCompleted();
     };
 
     loadJSONP(QUAKE_URL);
+}).flatMap(function transform(dataset){
+    return Rx.Observable.from(dataset.features);
 });
 
 quakes.subscribe(function(quake) {
