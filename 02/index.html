@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+        <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+        <script type="text/javascript" src="../rxjs/rx.all.js"></script>
+        <title>Earthquake map</title>
+        <style type="text/css">
+            html, body{
+                margin: 0;
+                padding: 0;
+                height: 100%;
+            }
+            #map {
+                height: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="map"></div>
+        <script>
+            var QUAKE_URL = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojsonp';
+            function loadJSONP(url) {
+                var script = document.createElement('script');
+                script.src = url;
+
+                document.getElementsByTagName('head')[0].appendChild(script);
+            }
+
+            var map = L.map('map').setView([33.858631, -118,279602], 7);
+
+            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+
+        </script>
+        <script src="code.js"></script>
+    </body>
+</html>
+
