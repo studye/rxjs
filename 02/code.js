@@ -1,12 +1,8 @@
-var quakes = Rx.Observable.create(function(observer) {
-    window.eqfeed_callback = function(response) {
-        observer.onNext(response);
-        observer.onCompleted();
-    };
-
-    loadJSONP(QUAKE_URL);
-}).flatMap(function transform(dataset){
-    return Rx.Observable.from(dataset.features);
+var quakes = Rx.DOM.jsonRequest({
+    url: QUAKE_URL,
+    jsonpCallBack: 'eqfeed_callback'
+}).flatMap(function transform(response){
+    return Rx.Observable.from(response.features);
 });
 
 quakes.subscribe(function(quake) {
