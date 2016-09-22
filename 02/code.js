@@ -1,8 +1,8 @@
-var quakes = Rx.DOM.jsonRequest({
+var quakes = Rx.DOM.jsonpRequest ({
     url: QUAKE_URL,
-    jsonpCallBack: 'eqfeed_callback'
-}).flatMap(function transform(response){
-    return Rx.Observable.from(response.features);
+    jsonpCallback: 'eqfeed_callback'
+}).flatMap(function transform(result){
+    return Rx.Observable.from(result.response.features);
 });
 
 quakes.subscribe(function(quake) {
