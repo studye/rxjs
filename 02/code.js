@@ -1,9 +1,13 @@
-var quakes = Rx.DOM.jsonpRequest ({
-    url: QUAKE_URL,
-    jsonpCallback: 'eqfeed_callback'
-}).flatMap(function transform(result){
-    return Rx.Observable.from(result.response.features);
-});
+'use strict';
+
+var quakes = Rx.Observable
+    .interval(5000)
+    .flatMap(()=> Rx.DOM.jsonpRequest({
+        url: QUAKE_URL,
+        jsonpCallback: 'eqfeed_callback'
+    }).retry(3))
+    .flatMap((result) => Rx.Observable.from(result.response.features))
+    .distinct((quake) => quake.properties.code);
 
 quakes.subscribe(function(quake) {
     var coords = quake.geometry.coordinates;
